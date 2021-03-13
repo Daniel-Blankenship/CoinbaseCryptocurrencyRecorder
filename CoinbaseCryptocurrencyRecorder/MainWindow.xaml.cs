@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CoinbaseCryprocurrencyRecorderData;
 
 namespace CoinbaseCryptocurrencyRecorder
 {
@@ -20,9 +21,28 @@ namespace CoinbaseCryptocurrencyRecorder
     /// </summary>
     public partial class MainWindow : Window
     {
+        SettingsPage theSettingsPage;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.Title = "Coinbase Cryptocurrency Recorder";
+
+            // initialize pages
+            theSettingsPage = new SettingsPage();
+
+            FileManager aFileManager = new FileManager();
+        }
+
+        private void Settings_Click(object sender, System.EventArgs e)
+        {
+            // used to set the displayed page
+            _mainFrame.Navigate(theSettingsPage);
+        }
+
+        private void NavigateEvent(object sender, System.EventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
         }
     }
 }
