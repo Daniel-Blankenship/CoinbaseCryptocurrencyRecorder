@@ -9,3 +9,7 @@ A program that stores cryptocurrency prices and other information retrieved from
 :hourglass: Records cryptocurreny information in a JSON file.<br><br>
 :hourglass: Displays price charts of various cryptocurrencies using saved information.<br><br>
 :hourglass: Displays price change percentages for various time intervals.<br><br>
+
+#### Used Libraries:
+[coinbasepro-csharp](https://github.com/dougdellolio/coinbasepro-csharp)<br>
+[Json.NET](https://github.com/JamesNK/Newtonsoft.Json)
