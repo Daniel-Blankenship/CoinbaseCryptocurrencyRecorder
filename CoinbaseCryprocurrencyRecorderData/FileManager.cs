@@ -16,7 +16,7 @@ namespace CoinbaseCryprocurrencyRecorderData
 
         public string[] ReadFile(string fileName)
         {
-            if (fileName != "API.json" && fileName != "RecorderData.json")
+            if (fileName != "API.json" && fileName != "RecorderData.json" && fileName != "Settings.json")
             {
                 // an unknown file name was received
                 throw new ArgumentException("An unknown file name was passed to the file reader");
