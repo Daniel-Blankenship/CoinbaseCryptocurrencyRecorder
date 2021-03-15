@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,19 @@ namespace CoinbaseCryprocurrencyRecorderData
         public FileManager()
         {
 
+        }
+
+        public void SaveSettings(Settings aSettingsObject)
+        {
+            string path = "Settings.Json";
+
+            string json = JsonConvert.SerializeObject(aSettingsObject, Formatting.Indented);
+
+            // write to the file
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.WriteLine(json);
+            }
         }
 
         public string[] ReadFile(string fileName)
