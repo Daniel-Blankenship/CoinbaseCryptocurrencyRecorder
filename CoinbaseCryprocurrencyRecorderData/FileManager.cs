@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,22 +11,47 @@ namespace CoinbaseCryprocurrencyRecorderData
 {
     public class FileManager
     {
+        private string settingsPath = "Settings.Json";
+
+        private List<string> defaultCryprocurrencyList;
+        private Settings defaultSettings;
+
         // default constructor
         public FileManager()
         {
+            defaultCryprocurrencyList = new List<string>()
+            {
+                "BTC-USD",
+                "LTC-USD"
+            };
 
+            defaultSettings = new Settings(300, 300, defaultCryprocurrencyList);
         }
 
         public void SaveSettings(Settings aSettingsObject)
         {
-            string path = "Settings.Json";
-
             string json = JsonConvert.SerializeObject(aSettingsObject, Formatting.Indented);
 
             // write to the file
-            using (StreamWriter sw = File.CreateText(path))
+            using (StreamWriter sw = File.CreateText(settingsPath))
             {
                 sw.WriteLine(json);
+            }
+        }
+
+        public Settings LoadSettings()
+        {
+            // if the settings file does not exist, create a default settings file
+            if(!File.Exists(settingsPath))
+            {
+                SaveSettings(defaultSettings);
+                return defaultSettings;
+            }
+            else
+            {
+                string fileData = File.ReadAllText(settingsPath);
+                Settings aSettingsObject = JsonConvert.DeserializeObject<Settings>(fileData);
+                return aSettingsObject;
             }
         }
 

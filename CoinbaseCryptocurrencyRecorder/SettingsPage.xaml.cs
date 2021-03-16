@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoinbaseCryprocurrencyRecorderData;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CoinbaseCryptocurrencyRecorder
 {
@@ -31,16 +33,76 @@ namespace CoinbaseCryptocurrencyRecorder
     {
         private ObservableCollection<Cryptocurrency> cryptocurrencyList;
 
+        private Settings theSettings;
+
+        private string addCryptocurrencyBoxDefaultText = "Add new markets here";
+
+        private DispatcherTimer timer;
+        private FileManager fileManagerObject;
+
         public SettingsPage()
         {
             InitializeComponent();
+
+            saveLoadLabel.Visibility = Visibility.Hidden;
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Tick += TimerTicked;
+
             cryptocurrencyList = new ObservableCollection<Cryptocurrency>();
             cryptocurrenciesListBox.ItemsSource = cryptocurrencyList;
+
+            addCryptocurrencyBox.Text = addCryptocurrencyBoxDefaultText;
+            settingsInfoLabel.Content = "";
+
+            fileManagerObject = new FileManager();
+
+            theSettings = fileManagerObject.LoadSettings();
+
+            foreach (string cryptocurrency in theSettings.Cryptocurrencies)
+            {
+                cryptocurrencyList.Add(new Cryptocurrency(cryptocurrency));
+            }
+
+            updateIntervalBox.Text = theSettings.UpdateInterval.ToString();
+            saveIntervalBox.Text = theSettings.SaveInterval.ToString();
         }
 
         private void AddCryptocurrency_Click(object sender, RoutedEventArgs e)
         {
+            if (addCryptocurrencyBox.Text == addCryptocurrencyBoxDefaultText)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "To add a cryptocurrency, you must type it into the add new market field";
+                return;
+            }
+            else if (addCryptocurrencyBox.Text.Length > 10)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: A cryptocurrency market shouldn't be longer than 10 characters";
+                return;
+            }
+            else if (addCryptocurrencyBox.Text.Length < 1)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The add new market was left empty";
+                return;
+            }
+
             cryptocurrencyList.Add(new Cryptocurrency(addCryptocurrencyBox.Text));
+            addCryptocurrencyBox.Text = "";
+
+            settingsInfoLabel.Visibility = Visibility.Hidden;
+        }
+
+        private void AddCryptocurrencyBox_Click(object sender, RoutedEventArgs e)
+        {
+            // clear the default text from the box when it is clicked so it is ready to accept information
+            if (addCryptocurrencyBox.Text == addCryptocurrencyBoxDefaultText)
+            {
+                addCryptocurrencyBox.Text = "";
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -52,6 +114,109 @@ namespace CoinbaseCryptocurrencyRecorder
                 Cryptocurrency aCryptocurrency = button.DataContext as Cryptocurrency;
                 cryptocurrencyList.Remove(aCryptocurrency);
             }
+        }
+
+        private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // if the settings fields have invalid data, do not save it
+            if (!verifyFields())
+            {
+                return;
+            }
+
+            // converts the observable list of Cryptocurrency to a list of String
+            List<string> listToSave = new List<string>();
+            foreach(Cryptocurrency i in cryptocurrencyList)
+            {
+                listToSave.Add(i.market);
+            }
+
+            // updates the settings object with the new data
+            theSettings.Cryptocurrencies = listToSave;
+            theSettings.SaveInterval = int.Parse(saveIntervalBox.Text);
+            theSettings.UpdateInterval = int.Parse(updateIntervalBox.Text);
+
+            fileManagerObject.SaveSettings(theSettings);
+
+            saveLoadLabel.Content = "Settings Saved";
+            saveLoadLabel.Visibility = Visibility.Visible;
+            timer.Start();
+
+            settingsInfoLabel.Visibility = Visibility.Hidden;
+        }
+
+        private void ReloadSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // load the settings from Settings.json
+            theSettings = fileManagerObject.LoadSettings();
+
+            // update the cryptocurrency list with the loaded settings
+            cryptocurrencyList.Clear();
+            foreach (string i in theSettings.Cryptocurrencies)
+            {
+                Cryptocurrency aNewCryptocurrency = new Cryptocurrency(i);
+                cryptocurrencyList.Add(aNewCryptocurrency);
+            }
+
+            // update the fields with the loaded settings
+            saveIntervalBox.Text = theSettings.SaveInterval.ToString();
+            updateIntervalBox.Text = theSettings.UpdateInterval.ToString();
+
+            saveLoadLabel.Content = "Settings loaded from file";
+            saveLoadLabel.Visibility = Visibility.Visible;
+            timer.Start();
+        }
+
+        private void TimerTicked(object sender, EventArgs e)
+        {
+            saveLoadLabel.Visibility = Visibility.Hidden;
+            timer.Stop();
+        }
+
+        // checks fields for valid data, and notifies the user if something is wrong
+        private bool verifyFields()
+        {
+            // check update interval field
+            if (!updateIntervalBox.Text.All(Char.IsDigit))
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The update interval field must only contain digits";
+                return false;
+            }
+            else if (updateIntervalBox.Text.Length > 10)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The update interval shouldn't be longer than 10 numbers";
+                return false;
+            }
+            else if (updateIntervalBox.Text.Length < 1)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The update interval field was left empty";
+                return false;
+            }
+
+            // check save interval field
+            if (!saveIntervalBox.Text.All(Char.IsDigit))
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The save interval field must only contain digits";
+                return false;
+            }
+            else if (saveIntervalBox.Text.Length > 10)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The save interval shouldn't be longer than 10 numbers";
+                return false;
+            }
+            else if (saveIntervalBox.Text.Length < 1)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The save interval field was left empty";
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -18,8 +18,7 @@
                 <MenuItem Header="Home"/>
                 <MenuItem Header="Charts"/>
             </MenuItem>
-            <MenuItem Header="Settings">
-                <MenuItem Header="Settings" Click="Settings_Click"/>
+            <MenuItem Header="Settings" Click="Settings_Click">
             </MenuItem>
         </Menu>
         <StackPanel></StackPanel>

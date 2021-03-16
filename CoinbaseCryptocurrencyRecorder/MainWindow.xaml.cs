@@ -22,6 +22,7 @@ namespace CoinbaseCryptocurrencyRecorder
     public partial class MainWindow : Window
     {
         SettingsPage theSettingsPage;
+        Settings theSettings;
 
         public MainWindow()
         {
@@ -31,7 +32,7 @@ namespace CoinbaseCryptocurrencyRecorder
             // initialize pages
             theSettingsPage = new SettingsPage();
 
-            FileManager aFileManager = new FileManager();
+            
         }
 
         private void Settings_Click(object sender, System.EventArgs e)

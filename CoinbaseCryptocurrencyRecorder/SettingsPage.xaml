@@ -10,15 +10,15 @@
       Background="GhostWhite">
 
     <Grid>
-        <TextBox Height="49" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Margin="413,35,164,0" FontSize="40" FontFamily="Arial"
+        <TextBox Height="49" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Margin="413,10,164,0" FontSize="30" FontFamily="Arial"
                  FontWeight="Bold" BorderThickness="0" Focusable="False" IsHitTestVisible="False" Background="GhostWhite">
         </TextBox>
-        <TextBox x:Name="updateIntervalBox" HorizontalAlignment="Left" Height="23" Margin="413,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="updateIntervalLabel" Content="Update Interval" HorizontalAlignment="Left" Margin="413,89,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="saveIntervalLabel" Content="Save Interval" HorizontalAlignment="Left" Margin="607,84,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="saveIntervalBox" HorizontalAlignment="Left" Height="23" Margin="607,120,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="cryptocurrenciesLabel" Content="Cryptocurrencies" HorizontalAlignment="Left" Margin="413,195,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="cryptocurrenciesListBox" HorizontalAlignment="Left" Height="177" Margin="413,226,0,0" VerticalAlignment="Top" Width="138">
+        <TextBox x:Name="updateIntervalBox" HorizontalAlignment="Left" Height="23" Margin="200,81,0,0" TextWrapping="Wrap" Text="Interval in seconds" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="updateIntervalLabel" Content="Update Interval (Seconds)" HorizontalAlignment="Left" Margin="200,54,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="saveIntervalLabel" Content="Save Interval  (Seconds)" HorizontalAlignment="Left" Margin="200,120,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="saveIntervalBox" HorizontalAlignment="Left" Height="23" Margin="200,146,0,0" TextWrapping="Wrap" Text="Interval in seconds" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="cryptocurrenciesLabel" Content="Cryptocurrency Markets" HorizontalAlignment="Left" Margin="413,54,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="cryptocurrenciesListBox" HorizontalAlignment="Left" Height="177" Margin="413,85,0,0" VerticalAlignment="Top" Width="138">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Width="100" Margin="2">
@@ -30,7 +30,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox x:Name="addCryptocurrencyBox" HorizontalAlignment="Left" Height="23" Margin="413,446,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" />
-        <Button x:Name="addCryptoCurrencyButton" Content="Add cryptocurrency" HorizontalAlignment="Left" Margin="569,449,0,0" VerticalAlignment="Top" Width="115" Click="AddCryptocurrency_Click"/>
+        <TextBox x:Name="addCryptocurrencyBox" HorizontalAlignment="Left" Height="23" Margin="413,267,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="138" PreviewMouseDown="AddCryptocurrencyBox_Click"/>
+        <Button x:Name="addCryptoCurrencyButton" Content="Add cryptocurrency" HorizontalAlignment="Left" Margin="413,295,0,0" VerticalAlignment="Top" Width="115" Click="AddCryptocurrency_Click"/>
+        <Button x:Name="saveSettingsButton" Content="Save Settings" HorizontalAlignment="Left" Margin="636,126,0,0" VerticalAlignment="Top" Width="97" Click="SaveSettingsButton_Click"/>
+        <Button x:Name="reloadSettingsButton" Content="Reload Settings" HorizontalAlignment="Left" Margin="636,85,0,0" VerticalAlignment="Top" Width="97" Click="ReloadSettingsButton_Click"/>
+        <Label x:Name="saveLoadLabel" Content="save/load label" HorizontalAlignment="Left" Margin="636,166,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="settingsInfoLabel" Content="settings info label" HorizontalAlignment="Left" Margin="200,329,0,0" VerticalAlignment="Top" Width="738" FontSize="18"/>
     </Grid>
 </Page>

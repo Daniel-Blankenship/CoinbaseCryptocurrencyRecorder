@@ -14,9 +14,9 @@ namespace CoinbaseCryprocurrencyRecorderData
         private int _saveInterval;
 
         // constructor
-        Settings(int updateInterval, int saveInterval, List<string> cryptocurrencies)
+        public Settings(int updateInterval, int saveInterval, List<string> cryptocurrencies)
         {
-            if ( cryptocurrencies == null || cryptocurrencies.Count > 1)
+            if ( cryptocurrencies == null || cryptocurrencies.Count < 1)
             {
                 throw new ArgumentNullException("cryptocurrencies can not be empty or null.");
             }
@@ -27,7 +27,7 @@ namespace CoinbaseCryprocurrencyRecorderData
         }
 
         // properties
-        public List<string> Cryptocurrencies { get; private set; }
+        public List<string> Cryptocurrencies { get; set; }
 
         // custom properties
         public int UpdateInterval
