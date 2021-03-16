@@ -14,9 +14,7 @@
                 <MenuItem Header="_Close"/>
                 <MenuItem Header="_Save"/>
             </MenuItem>
-            <MenuItem Header="_View">
-                <MenuItem Header="Home"/>
-                <MenuItem Header="Charts"/>
+            <MenuItem Header="Home" Click="Home_Click">
             </MenuItem>
             <MenuItem Header="Settings" Click="Settings_Click">
             </MenuItem>
@@ -24,7 +22,7 @@
         <StackPanel></StackPanel>
         
         <!--This is a frame for holding the pages-->
-        <Frame x:Name="_mainFrame" Navigated="NavigateEvent"/>
+        <Frame x:Name="_mainFrame" Navigated="NavigateEvent" NavigationUIVisibility="Hidden"/>
         
     </DockPanel>
 </Window>

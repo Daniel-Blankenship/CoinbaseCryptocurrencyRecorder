@@ -1,0 +1,26 @@
+﻿<Page x:Class="CoinbaseCryptocurrencyRecorder.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CoinbaseCryptocurrencyRecorder"
+      mc:Ignorable="d" 
+      d:DesignHeight="576" d:DesignWidth="1024"
+      Title="HomePage"
+      Background="GhostWhite">
+
+    <Grid>
+        <ListBox x:Name="cryptocurrencyDisplayListBox" HorizontalAlignment="Left" Height="256" Margin="177,108,0,0" VerticalAlignment="Top" Width="353">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Width="100" Margin="2">
+                        <TextBlock Text="{Binding market}" Width="75"/>
+                        <TextBlock Text="{Binding price}"/>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+    </Grid>
+</Page>

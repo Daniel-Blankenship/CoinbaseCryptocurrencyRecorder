@@ -33,8 +33,6 @@ namespace CoinbaseCryptocurrencyRecorder
     {
         private ObservableCollection<Cryptocurrency> cryptocurrencyList;
 
-        private Settings theSettings;
-
         private string addCryptocurrencyBoxDefaultText = "Add new markets here";
 
         private DispatcherTimer timer;
@@ -58,15 +56,13 @@ namespace CoinbaseCryptocurrencyRecorder
 
             fileManagerObject = new FileManager();
 
-            theSettings = fileManagerObject.LoadSettings();
-
-            foreach (string cryptocurrency in theSettings.Cryptocurrencies)
+            foreach (string cryptocurrency in ((MainWindow)Application.Current.MainWindow).theSettings.Cryptocurrencies)
             {
                 cryptocurrencyList.Add(new Cryptocurrency(cryptocurrency));
             }
 
-            updateIntervalBox.Text = theSettings.UpdateInterval.ToString();
-            saveIntervalBox.Text = theSettings.SaveInterval.ToString();
+            updateIntervalBox.Text = ((MainWindow)Application.Current.MainWindow).theSettings.UpdateInterval.ToString();
+            saveIntervalBox.Text = ((MainWindow)Application.Current.MainWindow).theSettings.SaveInterval.ToString();
         }
 
         private void AddCryptocurrency_Click(object sender, RoutedEventArgs e)
@@ -132,11 +128,11 @@ namespace CoinbaseCryptocurrencyRecorder
             }
 
             // updates the settings object with the new data
-            theSettings.Cryptocurrencies = listToSave;
-            theSettings.SaveInterval = int.Parse(saveIntervalBox.Text);
-            theSettings.UpdateInterval = int.Parse(updateIntervalBox.Text);
+            ((MainWindow)Application.Current.MainWindow).theSettings.Cryptocurrencies = listToSave;
+            ((MainWindow)Application.Current.MainWindow).theSettings.SaveInterval = int.Parse(saveIntervalBox.Text);
+            ((MainWindow)Application.Current.MainWindow).theSettings.UpdateInterval = int.Parse(updateIntervalBox.Text);
 
-            fileManagerObject.SaveSettings(theSettings);
+            fileManagerObject.SaveSettings(((MainWindow)Application.Current.MainWindow).theSettings);
 
             saveLoadLabel.Content = "Settings Saved";
             saveLoadLabel.Visibility = Visibility.Visible;
@@ -148,19 +144,19 @@ namespace CoinbaseCryptocurrencyRecorder
         private void ReloadSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             // load the settings from Settings.json
-            theSettings = fileManagerObject.LoadSettings();
+            ((MainWindow)Application.Current.MainWindow).theSettings = fileManagerObject.LoadSettings();
 
             // update the cryptocurrency list with the loaded settings
             cryptocurrencyList.Clear();
-            foreach (string i in theSettings.Cryptocurrencies)
+            foreach (string i in ((MainWindow)Application.Current.MainWindow).theSettings.Cryptocurrencies)
             {
                 Cryptocurrency aNewCryptocurrency = new Cryptocurrency(i);
                 cryptocurrencyList.Add(aNewCryptocurrency);
             }
 
             // update the fields with the loaded settings
-            saveIntervalBox.Text = theSettings.SaveInterval.ToString();
-            updateIntervalBox.Text = theSettings.UpdateInterval.ToString();
+            saveIntervalBox.Text = ((MainWindow)Application.Current.MainWindow).theSettings.SaveInterval.ToString();
+            updateIntervalBox.Text = ((MainWindow)Application.Current.MainWindow).theSettings.UpdateInterval.ToString();
 
             saveLoadLabel.Content = "Settings loaded from file";
             saveLoadLabel.Visibility = Visibility.Visible;

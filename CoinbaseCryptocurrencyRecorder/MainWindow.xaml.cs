@@ -21,24 +21,38 @@ namespace CoinbaseCryptocurrencyRecorder
     /// </summary>
     public partial class MainWindow : Window
     {
+        FileManager theFileManager;
+
         SettingsPage theSettingsPage;
-        Settings theSettings;
+        HomePage theHomePage;
+
+        public Settings theSettings;
 
         public MainWindow()
         {
             InitializeComponent();
             this.Title = "Coinbase Cryptocurrency Recorder";
 
+            // initialize variables
+            theFileManager = new FileManager();
+            theSettings = theFileManager.LoadSettings();
+
             // initialize pages
             theSettingsPage = new SettingsPage();
+            theHomePage = new HomePage();
 
+            _mainFrame.Navigate(theHomePage);
             
         }
 
         private void Settings_Click(object sender, System.EventArgs e)
         {
-            // used to set the displayed page
             _mainFrame.Navigate(theSettingsPage);
+        }
+
+        private void Home_Click(object sender, System.EventArgs e)
+        {
+            _mainFrame.Navigate(theHomePage);
         }
 
         private void NavigateEvent(object sender, System.EventArgs e)
