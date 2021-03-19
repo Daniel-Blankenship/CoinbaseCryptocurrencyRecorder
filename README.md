@@ -1,14 +1,12 @@
 # Coinbase Cryptocurrency Recorder
 
-A program that stores cryptocurrency prices and other information retrieved from the Coinbase API.
+A program that stores cryptocurrency prices retrieved from the Coinbase websocket feed.
 
 #### Features (Work in Progress):
 
-:hourglass: Retrieves information from Coinbase using their API.<br><br>
-:hourglass: Displays the current information about various cryptocurrencies.<br><br>
+:heavy_check_mark: Retrieves information from Coinbase using their websocket feed.<br><br>
+:heavy_check_mark: Displays the current information about various cryptocurrencies.<br><br>
 :hourglass: Records cryptocurreny information in a JSON file.<br><br>
-:hourglass: Displays price charts of various cryptocurrencies using saved information.<br><br>
-:hourglass: Displays price change percentages for various time intervals.<br><br>
 
 #### Used Libraries:
 [coinbasepro-csharp](https://github.com/dougdellolio/coinbasepro-csharp)<br>
