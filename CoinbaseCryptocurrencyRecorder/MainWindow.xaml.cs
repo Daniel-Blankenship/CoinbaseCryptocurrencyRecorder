@@ -28,6 +28,7 @@ namespace CoinbaseCryptocurrencyRecorder
         HomePage theHomePage;
 
         public Settings theSettings;
+        public RecordedData theRecordedData;
 
         private DispatcherTimer updateTimer;
         private DispatcherTimer saveTimer;
@@ -41,11 +42,6 @@ namespace CoinbaseCryptocurrencyRecorder
             InitializeComponent();
             this.Title = "Coinbase Cryptocurrency Recorder";
 
-            updateTimer = new DispatcherTimer();
-            updateTimer.Interval = TimeSpan.FromSeconds(3);
-            updateTimer.Tick += UpdateTimerTicked;
-            updateTimer.Start();
-
             // initialize variables
             theFileManager = new FileManager();
             theSettings = theFileManager.LoadSettings();
@@ -57,7 +53,18 @@ namespace CoinbaseCryptocurrencyRecorder
             _mainFrame.Navigate(theHomePage);
 
             aClient = new Client(theSettings.Cryptocurrencies);
-           
+            theRecordedData = new RecordedData();
+
+            updateTimer = new DispatcherTimer();
+            updateTimer.Interval = TimeSpan.FromSeconds(theSettings.UpdateInterval);
+            updateTimer.Tick += UpdateTimerTicked;
+            updateTimer.Start();
+
+            saveTimer = new DispatcherTimer();
+            saveTimer.Interval = TimeSpan.FromSeconds(theSettings.SaveInterval);
+            saveTimer.Tick += SaveTimerTicked;
+            saveTimer.Start();
+
 
         }
 
@@ -70,6 +77,18 @@ namespace CoinbaseCryptocurrencyRecorder
             {
                 Console.WriteLine(price.market + " " + price.price);
             }
+        }
+
+        private void SaveTimerTicked(object sender, EventArgs e)
+        {
+            theRecordedData = theFileManager.LoadRecordedData();
+
+            foreach (CryptocurrencyData price in theHomePage.cryptocurrencyList)
+            {
+                theRecordedData.updateRecordedData(price);
+            }
+
+            theFileManager.SaveRecordedData(theRecordedData);
         }
 
         private void Settings_Click(object sender, System.EventArgs e)

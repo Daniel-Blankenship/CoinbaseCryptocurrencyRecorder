@@ -12,6 +12,7 @@ namespace CoinbaseCryprocurrencyRecorderData
     public class FileManager
     {
         private string settingsPath = "Settings.Json";
+        private string recordedDataPath = "RecordedData.Json";
 
         private List<string> defaultCryprocurrencyList;
         private Settings defaultSettings;
@@ -19,13 +20,14 @@ namespace CoinbaseCryprocurrencyRecorderData
         // default constructor
         public FileManager()
         {
+
             defaultCryprocurrencyList = new List<string>()
             {
                 "BtcUsd",
                 "LtcUsd"
             };
 
-            defaultSettings = new Settings(300, 300, defaultCryprocurrencyList);
+            defaultSettings = new Settings(5, 300, defaultCryprocurrencyList);
         }
 
         public void SaveSettings(Settings aSettingsObject)
@@ -54,6 +56,34 @@ namespace CoinbaseCryprocurrencyRecorderData
                 return aSettingsObject;
             }
         }
+
+        public void SaveRecordedData(RecordedData aRecordedDataObject)
+        {
+            string json = JsonConvert.SerializeObject(aRecordedDataObject, Formatting.Indented);
+
+            // write to the file
+            using (StreamWriter sw = File.CreateText(recordedDataPath))
+            {
+                sw.WriteLine(json);
+            }
+        }
+
+        public RecordedData LoadRecordedData()
+        {
+            // if the recorded data file does not exist, return an empty object
+            if (!File.Exists(recordedDataPath))
+            {
+                RecordedData aRecordedDataObject = new RecordedData();
+                return aRecordedDataObject;
+            }
+            else
+            {
+                string fileData = File.ReadAllText(recordedDataPath);
+                RecordedData aRecordedDataObject = JsonConvert.DeserializeObject<RecordedData>(fileData);
+                return aRecordedDataObject;
+            }
+        }
+
 
         public string[] ReadFile(string fileName)
         {

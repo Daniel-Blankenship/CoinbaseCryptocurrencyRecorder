@@ -82,7 +82,7 @@ namespace CoinbaseCryptocurrencyRecorder
             else if (addCryptocurrencyBox.Text.Length < 1)
             {
                 settingsInfoLabel.Visibility = Visibility.Visible;
-                settingsInfoLabel.Content = "Invalid data entered: The add new market was left empty";
+                settingsInfoLabel.Content = "Invalid data entered: The add new market field was left empty";
                 return;
             }
 

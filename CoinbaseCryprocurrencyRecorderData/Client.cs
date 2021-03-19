@@ -93,6 +93,9 @@ namespace CoinbaseCryprocurrencyRecorderData
 
             // update the price
             priceList[index].price = e.LastOrder.Price;
+
+            // update the time the price was last received
+            priceList[index].timeReceived = DateTime.Now.ToString();
         }
     }
 }

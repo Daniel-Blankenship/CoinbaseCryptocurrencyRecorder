@@ -8,17 +8,14 @@ namespace CoinbaseCryprocurrencyRecorderData
 {
     public class CryptocurrencyData
     {
-
-
         // constructor
         public CryptocurrencyData(string newMarket)
         {
             market = newMarket;
         }
 
+        public string timeReceived { get; set; }
         public string market { get; set; }
         public decimal price { get; set; }
-
     }
-
 }

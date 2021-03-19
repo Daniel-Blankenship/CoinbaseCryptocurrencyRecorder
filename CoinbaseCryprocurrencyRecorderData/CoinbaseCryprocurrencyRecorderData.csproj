@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="CryptocurrencyData.cs" />
+    <Compile Include="RecordedData.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
