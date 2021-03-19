@@ -35,9 +35,9 @@ namespace CoinbaseCryprocurrencyRecorderData
             get { return _updateInterval; }
             set
             {
-                if (value < 10)
+                if (value < 1)
                 {
-                    throw new ArgumentOutOfRangeException("updateInterval cannot be less than 10 seconds");
+                    throw new ArgumentOutOfRangeException("updateInterval cannot be less than 1 second");
                 }
 
                 _updateInterval = value;
@@ -49,9 +49,9 @@ namespace CoinbaseCryprocurrencyRecorderData
             get { return _saveInterval; }
             set
             {
-                if (value < 10)
+                if (value < 1)
                 {
-                    throw new ArgumentOutOfRangeException("saveInterval cannot be less than 10 seconds");
+                    throw new ArgumentOutOfRangeException("saveInterval cannot be less than 1 second");
                 }
 
                 _saveInterval = value;

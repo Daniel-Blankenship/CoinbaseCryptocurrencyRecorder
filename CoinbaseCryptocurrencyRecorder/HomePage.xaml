@@ -13,9 +13,9 @@
         <ListBox x:Name="cryptocurrencyDisplayListBox" HorizontalAlignment="Left" Height="256" Margin="177,108,0,0" VerticalAlignment="Top" Width="353">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel Width="100" Margin="2">
+                    <DockPanel Width="200" Margin="2">
                         <TextBlock Text="{Binding market}" Width="75"/>
-                        <TextBlock Text="{Binding price}"/>
+                        <TextBlock Text="{Binding price, StringFormat='c'}" Width="90"/>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

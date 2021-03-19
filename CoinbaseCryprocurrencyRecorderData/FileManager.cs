@@ -21,8 +21,8 @@ namespace CoinbaseCryprocurrencyRecorderData
         {
             defaultCryprocurrencyList = new List<string>()
             {
-                "BTC-USD",
-                "LTC-USD"
+                "BtcUsd",
+                "LtcUsd"
             };
 
             defaultSettings = new Settings(300, 300, defaultCryprocurrencyList);
@@ -57,25 +57,15 @@ namespace CoinbaseCryprocurrencyRecorderData
 
         public string[] ReadFile(string fileName)
         {
-            if (fileName != "API.json" && fileName != "RecorderData.json" && fileName != "Settings.json")
+            if (fileName != "RecorderData.json" && fileName != "Settings.json")
             {
                 // an unknown file name was received
                 throw new ArgumentException("An unknown file name was passed to the file reader");
             }
 
-            // System.IO.File.Exists
-            // FileData = System.IO.File.ReadAllLines(@"Ideas.txt");
             string[] fileData = System.IO.File.ReadAllLines(fileName);
-
-            // view data that was read in console for testing purposes
-            foreach (string line in fileData)
-            {
-                Console.WriteLine(line);
-            }
 
             return fileData;
         }
     }
-
-
 }

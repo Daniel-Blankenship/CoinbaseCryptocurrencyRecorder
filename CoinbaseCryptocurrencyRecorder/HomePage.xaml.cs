@@ -22,14 +22,15 @@ namespace CoinbaseCryptocurrencyRecorder
     /// </summary>
     public partial class HomePage : Page
     {
-        private ObservableCollection<CryptocurrencyData> cryptocurrencyList;
+        public ObservableCollection<CryptocurrencyData> cryptocurrencyList;
 
         public HomePage()
         {
             InitializeComponent();
 
             cryptocurrencyList = new ObservableCollection<CryptocurrencyData>();
-            cryptocurrencyDisplayListBox.ItemsSource = cryptocurrencyList;
+            //cryptocurrencyDisplayListBox.ItemsSource = cryptocurrencyList;
+            cryptocurrencyDisplayListBox.ItemsSource = Client.priceList;
 
             foreach (string cryptocurrency in ((MainWindow)Application.Current.MainWindow).theSettings.Cryptocurrencies)
             {

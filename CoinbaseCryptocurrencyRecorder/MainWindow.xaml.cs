@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using CoinbaseCryprocurrencyRecorderData;
 
 namespace CoinbaseCryptocurrencyRecorder
@@ -28,10 +29,22 @@ namespace CoinbaseCryptocurrencyRecorder
 
         public Settings theSettings;
 
+        private DispatcherTimer updateTimer;
+        private DispatcherTimer saveTimer;
+
+        public Client aClient;
+
+
+
         public MainWindow()
         {
             InitializeComponent();
             this.Title = "Coinbase Cryptocurrency Recorder";
+
+            updateTimer = new DispatcherTimer();
+            updateTimer.Interval = TimeSpan.FromSeconds(3);
+            updateTimer.Tick += UpdateTimerTicked;
+            updateTimer.Start();
 
             // initialize variables
             theFileManager = new FileManager();
@@ -42,7 +55,21 @@ namespace CoinbaseCryptocurrencyRecorder
             theHomePage = new HomePage();
 
             _mainFrame.Navigate(theHomePage);
-            
+
+            aClient = new Client(theSettings.Cryptocurrencies);
+           
+
+        }
+
+        private void UpdateTimerTicked(object sender, EventArgs e)
+        {
+            theHomePage.cryptocurrencyList = Client.priceList;
+            theHomePage.cryptocurrencyDisplayListBox.Items.Refresh();
+
+            foreach (CryptocurrencyData price in theHomePage.cryptocurrencyList)
+            {
+                Console.WriteLine(price.market + " " + price.price);
+            }
         }
 
         private void Settings_Click(object sender, System.EventArgs e)
