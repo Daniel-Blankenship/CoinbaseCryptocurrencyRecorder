@@ -133,6 +133,8 @@ namespace CoinbaseCryptocurrencyRecorder
             ((MainWindow)Application.Current.MainWindow).theSettings.UpdateInterval = int.Parse(updateIntervalBox.Text);
 
             fileManagerObject.SaveSettings(((MainWindow)Application.Current.MainWindow).theSettings);
+            ((MainWindow)Application.Current.MainWindow).UpdateSettings();
+
 
             saveLoadLabel.Content = "Settings Saved";
             saveLoadLabel.Visibility = Visibility.Visible;
@@ -154,9 +156,11 @@ namespace CoinbaseCryptocurrencyRecorder
                 cryptocurrencyList.Add(aNewCryptocurrency);
             }
 
-            // update the fields with the loaded settings
+            // update the settings fields with the loaded settings
             saveIntervalBox.Text = ((MainWindow)Application.Current.MainWindow).theSettings.SaveInterval.ToString();
             updateIntervalBox.Text = ((MainWindow)Application.Current.MainWindow).theSettings.UpdateInterval.ToString();
+
+            ((MainWindow)Application.Current.MainWindow).UpdateSettings();
 
             saveLoadLabel.Content = "Settings loaded from file";
             saveLoadLabel.Visibility = Visibility.Visible;

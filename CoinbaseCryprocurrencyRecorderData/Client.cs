@@ -51,6 +51,26 @@ namespace CoinbaseCryprocurrencyRecorderData
             theWebSocket.OnTickerReceived += WebSocket_OnTickerReceived;
         }
 
+        public void UpdateCryptocurrencyList(List<string> cryptocurrencies)
+        {
+            // empties the pricelist before adding the new data to it
+            priceList.Clear();
+
+            // builds the pricelist using a list of cryprocurrency market strings
+            foreach (string cryptocurrency in cryptocurrencies)
+            {
+                CryptocurrencyData newCryptocurrencyData = new CryptocurrencyData(cryptocurrency);
+                priceList.Add(newCryptocurrencyData);
+            }
+
+            // update the product types from the newly updated cryptocurrency list
+            theProductTypes = parseProducts(cryptocurrencies);
+
+            // restarts the websocket with the new list of currencies to listen for
+            theWebSocket.Stop();
+            theWebSocket.Start(theProductTypes, theChanelTypes);
+        }
+
         // converts a list of cryptocurrency market setings to enumerables used by the CoinbasePro library
         private List<ProductType> parseProducts(List<string> cryptocurrencies)
         {

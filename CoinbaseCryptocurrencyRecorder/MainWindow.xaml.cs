@@ -33,7 +33,7 @@ namespace CoinbaseCryptocurrencyRecorder
         private DispatcherTimer updateTimer;
         private DispatcherTimer saveTimer;
 
-        public Client aClient;
+        public Client theClient;
 
 
 
@@ -52,7 +52,7 @@ namespace CoinbaseCryptocurrencyRecorder
 
             _mainFrame.Navigate(theHomePage);
 
-            aClient = new Client(theSettings.Cryptocurrencies);
+            theClient = new Client(theSettings.Cryptocurrencies);
             theRecordedData = new RecordedData();
 
             updateTimer = new DispatcherTimer();
@@ -89,6 +89,19 @@ namespace CoinbaseCryptocurrencyRecorder
             }
 
             theFileManager.SaveRecordedData(theRecordedData);
+        }
+
+        // make changes to reflect new settings
+        public void UpdateSettings()
+        {
+            // update timer intervals
+            updateTimer.Interval = TimeSpan.FromSeconds(theSettings.UpdateInterval);
+            saveTimer.Interval = TimeSpan.FromSeconds(theSettings.SaveInterval);
+
+            // update the client's cryptocurrency list
+            theClient.UpdateCryptocurrencyList(theSettings.Cryptocurrencies);
+
+            Console.WriteLine("Settings updated");
         }
 
         private void Settings_Click(object sender, System.EventArgs e)
