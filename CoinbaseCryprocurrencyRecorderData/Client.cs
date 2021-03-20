@@ -71,7 +71,7 @@ namespace CoinbaseCryprocurrencyRecorderData
             theWebSocket.Start(theProductTypes, theChanelTypes);
         }
 
-        // converts a list of cryptocurrency market setings to enumerables used by the CoinbasePro library
+        // converts a list of cryptocurrency market settings to enumerables used by the CoinbasePro library
         private List<ProductType> parseProducts(List<string> cryptocurrencies)
         {
             List<ProductType> parsedProducts = new List<ProductType>();
@@ -79,6 +79,7 @@ namespace CoinbaseCryprocurrencyRecorderData
 
             foreach (string cryptocurrency in cryptocurrencies)
             {
+                
                 if (Enum.TryParse(cryptocurrency, out parsedProduct) == true)
                 {
                     parsedProducts.Add(parsedProduct);

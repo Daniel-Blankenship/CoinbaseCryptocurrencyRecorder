@@ -67,6 +67,8 @@ namespace CoinbaseCryptocurrencyRecorder
 
         private void AddCryptocurrency_Click(object sender, RoutedEventArgs e)
         {
+            CryptocurrencyData aCryptocurrencyDataObject = new CryptocurrencyData(addCryptocurrencyBox.Text);
+
             if (addCryptocurrencyBox.Text == addCryptocurrencyBoxDefaultText)
             {
                 settingsInfoLabel.Visibility = Visibility.Visible;
@@ -83,6 +85,12 @@ namespace CoinbaseCryptocurrencyRecorder
             {
                 settingsInfoLabel.Visibility = Visibility.Visible;
                 settingsInfoLabel.Content = "Invalid data entered: The add new market field was left empty";
+                return;
+            }
+            else if (aCryptocurrencyDataObject.parseProduct() == false)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "Invalid data entered: The market is not supported";
                 return;
             }
 
