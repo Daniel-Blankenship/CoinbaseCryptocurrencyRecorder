@@ -72,11 +72,6 @@ namespace CoinbaseCryptocurrencyRecorder
         {
             theHomePage.cryptocurrencyList = Client.priceList;
             theHomePage.cryptocurrencyDisplayListBox.Items.Refresh();
-
-            foreach (CryptocurrencyData price in theHomePage.cryptocurrencyList)
-            {
-                Console.WriteLine(price.market + " " + price.price);
-            }
         }
 
         private void SaveTimerTicked(object sender, EventArgs e)

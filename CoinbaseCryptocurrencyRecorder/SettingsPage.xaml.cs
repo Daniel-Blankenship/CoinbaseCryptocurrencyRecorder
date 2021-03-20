@@ -224,6 +224,14 @@ namespace CoinbaseCryptocurrencyRecorder
                 return false;
             }
 
+            // make sure there is at least one item in the cryptocurrency list
+            if (cryptocurrencyList.Count < 1)
+            {
+                settingsInfoLabel.Visibility = Visibility.Visible;
+                settingsInfoLabel.Content = "There needs to be at least one market in the markets list";
+                return false;
+            }
+
             return true;
         }
     }

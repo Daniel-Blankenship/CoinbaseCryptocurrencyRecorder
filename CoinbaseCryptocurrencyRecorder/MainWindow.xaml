@@ -9,14 +9,9 @@
     <!--The underscores set the shortcut keys (Alt+f for "file")-->
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open"/>
-                <MenuItem Header="_Close"/>
-                <MenuItem Header="_Save"/>
+            <MenuItem Header="_Home" Click="Home_Click">
             </MenuItem>
-            <MenuItem Header="Home" Click="Home_Click">
-            </MenuItem>
-            <MenuItem Header="Settings" Click="Settings_Click">
+            <MenuItem Header="_Settings" Click="Settings_Click">
             </MenuItem>
         </Menu>
         <StackPanel></StackPanel>

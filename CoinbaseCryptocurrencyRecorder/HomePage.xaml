@@ -10,17 +10,18 @@
       Background="GhostWhite">
 
     <Grid>
-        <ListBox x:Name="cryptocurrencyDisplayListBox" HorizontalAlignment="Left" Height="256" Margin="177,108,0,0" VerticalAlignment="Top" Width="353">
+        <ListBox x:Name="cryptocurrencyDisplayListBox" HorizontalAlignment="Left" Height="424" Margin="382,55,0,0" VerticalAlignment="Top" Width="260">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Width="200" Margin="2">
-                        <TextBlock Text="{Binding market}" Width="75"/>
-                        <TextBlock Text="{Binding price, StringFormat='c'}" Width="90"/>
+                        <TextBlock Text="{Binding market}" FontSize="15" FontWeight="Bold" Width="65"/>
+                        <TextBlock Text="{Binding price, StringFormat='c'}" FontSize="15" FontWeight="ExtraBold" Width="100"/>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
         </ListBox>
+        <TextBlock x:Name="cryptocurrencyDisplayHeader" HorizontalAlignment="Left" Margin="382,30,0,0" TextWrapping="Wrap" Text="  Market        Price" VerticalAlignment="Top" Width="210" FontSize="15" FontWeight="Bold"/>
+
 
     </Grid>
 </Page>
